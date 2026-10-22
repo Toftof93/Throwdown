@@ -1,0 +1,28 @@
+<!doctype html><html><head><link rel="stylesheet" href="base.css"><style>
+.c { position: relative; width: 1500px; height: 500px; overflow: hidden; background: radial-gradient(ellipse 60% 90% at 62% 0%, #2a2108 0%, #0f0d08 55%, #070706 100%); }
+.dots { -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 35%, transparent 75%, #000 100%); }
+.rope { position: absolute; left: 0; right: 0; height: 12px; background: linear-gradient(rgba(246,241,232,.22),rgba(246,241,232,.22)) 0 0/100% 1px no-repeat, linear-gradient(rgba(255,197,49,.75),rgba(255,197,49,.75)) 0 5px/100% 2px no-repeat, linear-gradient(rgba(246,241,232,.22),rgba(246,241,232,.22)) 0 11px/100% 1px no-repeat; }
+.t { position: absolute; left: 460px; top: 84px; right: 40px; }
+.chip { display: inline-block; font-family: GeistMono; font-size: 17px; letter-spacing: .22em; color: var(--bell); background: #000; border: 1px solid rgba(255,197,49,.4); padding: 9px 16px; border-radius: 4px; }
+h1 { font-family: Anton; font-weight: 400; text-transform: uppercase; font-size: 92px; line-height: .92; margin-top: 20px; white-space: nowrap; transform: skewX(-8deg); transform-origin: left bottom; color: var(--ink); text-shadow: 6px 6px 0 #000; letter-spacing: .005em; }
+h1 .w { color: transparent; -webkit-text-stroke: 2.5px var(--ink); text-shadow: none; }
+h1 em { font-style: normal; color: var(--bell); -webkit-text-stroke: 0; text-shadow: 6px 6px 0 #000; }
+.bar { position: absolute; left: 470px; bottom: 58px; width: 440px; }
+.hp { height: 18px; display: flex; transform: skewX(-24deg); border: 2px solid #000; box-shadow: 0 0 0 1px #34312a; background: #000; position: relative; }
+.hp::before { content: ""; position: absolute; inset: 0; z-index: 1; background: repeating-linear-gradient(90deg, transparent 0 16px, rgba(0,0,0,.45) 16px 18px); }
+.hp i:first-child { width: 62%; background: linear-gradient(#ffd35c, #ffc531 55%, #b98a10); }
+.hp i:last-child { width: 38%; background: linear-gradient(#fff, #efe9dc 55%, #bdb6a8); }
+.hp::after { content: ""; position: absolute; left: 50%; top: -5px; bottom: -5px; width: 3px; background: var(--bell); z-index: 2; }
+.lbl { display: flex; justify-content: space-between; margin-top: 10px; font-family: Anton; font-size: 26px; }
+.lbl span:first-child { color: var(--bell); } .lbl span:last-child { color: var(--ink); }
+.vs { position: absolute; left: 930px; bottom: 60px; width: 64px; height: 64px; border-radius: 50%; background: #000; border: 3px solid var(--bell); display: grid; place-items: center; font-family: Anton; font-size: 28px; color: var(--bell); transform: rotate(-8deg); box-shadow: 0 0 0 6px rgba(255,197,49,.12); }
+.url { position: absolute; right: 60px; bottom: 66px; font-family: GeistMono; font-size: 18px; letter-spacing: .12em; color: rgba(246,241,232,.6); }
+</style></head><body><div class="c grain">
+<div class="dots"></div>
+<div class="rope" style="top:26px"></div><div class="rope" style="bottom:26px"></div>
+<div class="t"><span class="chip">THE FIRST LAUNCHPAD WHERE PROJECTS CAN FIGHT</span>
+<h1>Launch your project.<br><span class="w">Fight if you <em>want.</em></span></h1></div>
+<div class="url">ROBINHOOD CHAIN</div>
+<div class="vs">VS</div>
+<div class="bar"><div class="hp"><i></i><i></i></div><div class="lbl"><span>62%</span><span>38%</span></div></div>
+</div></body></html>
