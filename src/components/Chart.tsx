@@ -47,7 +47,7 @@ export function Chart({ points, start, openAt, now, marker }: { points: Point[];
       <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label="Price chart">
         {ticks.map((v, i) => (
           <g key={i}>
-            <line x1={0} x2={W - PAD} y1={y(v)} y2={y(v)} stroke="#23271f" strokeDasharray="3 5" />
+            <line x1={0} x2={W - PAD} y1={y(v)} y2={y(v)} stroke="#26241f" strokeDasharray="3 5" />
             <text x={W - PAD + 6} y={y(v) + 4} className="axis">
               {fmtNum(v)}
             </text>
@@ -55,7 +55,7 @@ export function Chart({ points, start, openAt, now, marker }: { points: Point[];
         ))}
         {cs.map((c, i) => {
           const up = c.c >= c.o;
-          const col = up ? "#34d17b" : "#ff5c4d";
+          const col = up ? "#ffc531" : "#8c867a";
           const x = i * cw + cw / 2;
           const top = y(Math.max(c.o, c.c)), bot = y(Math.min(c.o, c.c));
           return (

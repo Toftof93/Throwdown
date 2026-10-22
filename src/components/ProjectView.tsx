@@ -123,7 +123,7 @@ export function ProjectView({ id }: { id: number }) {
               <ul className="feed">
                 {d.backings.slice(0, 30).map((b) => (
                   <li key={b.tx + b.amount}>
-                    <span className="dot" style={{ background: "var(--up)" }} />
+                    <span className="dot" style={{ background: "var(--bell)" }} />
                     <a className="who" href={`${EXPLORER}/tx/${b.tx}`} target="_blank" rel="noreferrer">
                       {shortAddr(b.backer)}
                       {b.note ? ` · "${b.note}"` : " backed it"}
