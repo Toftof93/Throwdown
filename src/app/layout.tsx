@@ -6,7 +6,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { SITE, CHAIN } from "@/lib/config";
 
-const description = "A launchpad on Robinhood Chain. Launch your project, get ranked daily, and the top 3 win buybacks. Call out a rival for a 1v1 if you want.";
+const description = "The first launchpad where projects can fight, on Robinhood Chain. Launch your project, get ranked daily, and the top 3 win buybacks. Call out a rival for a 1v1 if you want.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
