@@ -41,6 +41,9 @@ export function walletMessage(e: unknown): string {
   if (/Expired/.test(msg)) return "The trade took too long to confirm. Try again.";
   if (/TooLittleReceived/i.test(msg)) return "The price moved past your slippage limit. Try again.";
   if (/QuoteNotEnabled/i.test(msg)) return "That pair isn't available right now.";
+  if (/TooSmall/.test(msg)) return "The smallest backing is 0.0001 ETH.";
+  if (/Hidden\b/.test(msg)) return "Backing is closed for this project.";
+  if (/NothingToWithdraw/.test(msg)) return "There's nothing to withdraw yet.";
   if (/BadName/i.test(msg)) return "Check the name (1–64 characters) and ticker (1–16 characters).";
   return (e as { shortMessage?: string }).shortMessage ?? msg.split("\n")[0];
 }

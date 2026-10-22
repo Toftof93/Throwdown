@@ -86,6 +86,19 @@ export function Home() {
         )}
       </section>
 
+      <section className="sec">
+        <div className="belt">
+          <div>
+            <span className="eyebrow">Project Showcase</span>
+            <div className="pool" style={{ fontSize: "clamp(30px, 4.5vw, 46px)" }}>No token? Still fight.</div>
+            <p>List your app or product without a token. People back it with ETH that goes straight to you, and the most-backed projects top the daily card.</p>
+          </div>
+          <a href="/showcase" className="btn bell big">
+            See the Showcase
+          </a>
+        </div>
+      </section>
+
       {open.length > 0 && (
         <section className="sec" id="open">
           <div className="sec-row">

@@ -271,7 +271,7 @@ input, textarea, select { font: inherit; color: inherit; }
 
 
 /* ---------------------------------------------------------------- throwdown */
-.home { padding-top: 26px; padding-bottom: 60px; }
+.home, .showcase { padding-top: 26px; padding-bottom: 60px; }
 .poster { position: relative; overflow: hidden; border-radius: 24px; border: 1px solid var(--line); padding: 38px 30px 32px; text-align: center; background: linear-gradient(110deg, rgba(255, 51, 72, .22), transparent 42%, transparent 58%, rgba(58, 123, 255, .22)), var(--panel); }
 .poster::before { content: "VS"; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--display); font-size: clamp(180px, 34vw, 420px); line-height: 1; color: rgba(255, 255, 255, .035); pointer-events: none; }
 .poster .eyebrow { color: var(--bell); }

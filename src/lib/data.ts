@@ -20,7 +20,7 @@ export type Swap = { block: string; time: number; tx: Hex; trader: Address; side
 
 // ------------------------------------------------------------------ logs
 
-async function logs(event: AbiEvent, address: Address, args: Record<string, unknown> | undefined, from: bigint, to: bigint): Promise<any[]> {
+export async function logs(event: AbiEvent, address: Address, args: Record<string, unknown> | undefined, from: bigint, to: bigint): Promise<any[]> {
   if (from > to) return [];
   try {
     return await client.getLogs({ address, event, args, fromBlock: from, toBlock: to } as any);

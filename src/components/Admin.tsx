@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { createPublicClient, http, keccak256, concat, pad, toHex, getContractAddress, type Address, type Chain, type Hex } from "viem";
 import { CHAINS } from "@/lib/chains";
-import { factoryAbi } from "@/lib/abi";
+import { factoryAbi, showcaseAbi } from "@/lib/abi";
 import factoryArt from "@/lib/abi/ThrowdownFactory.json";
 import routerArt from "@/lib/abi/ThrowRouter.json";
 import deployerArt from "@/lib/abi/ThrowDeployer.json";
+import showcaseArt from "@/lib/abi/ThrowShowcase.json";
 import pmArt from "@/lib/abi/PoolManager.json";
 import { connect, walletMessage } from "@/lib/wallet";
 import { tickForMcap, mcapForTick } from "@/lib/math";
@@ -15,7 +16,7 @@ const OFFICIAL_PM: Record<number, Address> = { 4663: "0x8366a39cc670b4001a1121b8
 // beforeInitialize, beforeSwap and afterSwap
 const FLAGS = (1n << 13n) | (1n << 7n) | (1n << 6n);
 
-type Saved = { poolManager?: Address; deployer?: Address; factory?: Address; startBlock?: string; hook?: Address; router?: Address };
+type Saved = { poolManager?: Address; deployer?: Address; factory?: Address; startBlock?: string; hook?: Address; router?: Address; showcase?: Address; showcaseBlock?: string };
 
 const storeKey = (id: number) => `throwdown:deploy:${id}`;
 const load = (id: number): Saved => {
@@ -54,6 +55,9 @@ export function Admin() {
   const [leadMin, setLeadMin] = useState("5");
   const [protocolPct, setProtocolPct] = useState("20");
   const [current, setCurrent] = useState<{ tick: number; lead: number; protocol: number; owner: Address } | null>(null);
+  const [showFee, setShowFee] = useState("5");
+  const [hideId, setHideId] = useState("");
+  const [showNow, setShowNow] = useState<{ fee: number; count: number } | null>(null);
 
   useEffect(() => {
     const saved = load(chainId);
@@ -76,6 +80,15 @@ export function Admin() {
       .catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [s.factory, chainId, busy]);
+
+  useEffect(() => {
+    if (!s.showcase) return setShowNow(null);
+    const a = s.showcase;
+    Promise.all(["feeBps", "projectCount"].map((fn) => pc.readContract({ address: a, abi: showcaseAbi, functionName: fn })))
+      .then(([fee, count]) => setShowNow({ fee: Number(fee), count: Number(count) }))
+      .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [s.showcase, chainId, busy]);
 
   async function step(label: string, f: (w: Awaited<ReturnType<typeof connect>>) => Promise<void>) {
     setBusy(label);
@@ -129,6 +142,8 @@ export function Admin() {
           `NEXT_PUBLIC_FACTORY=${s.factory}`,
           `NEXT_PUBLIC_ROUTER=${s.router}`,
           `NEXT_PUBLIC_START_BLOCK=${s.startBlock ?? 0}`,
+          s.showcase ? `NEXT_PUBLIC_SHOWCASE=${s.showcase}` : null,
+          s.showcase ? `NEXT_PUBLIC_SHOWCASE_BLOCK=${s.showcaseBlock ?? 0}` : null,
         ]
           .filter(Boolean)
           .join("\n")
@@ -294,7 +309,70 @@ export function Admin() {
 
         <section className="panel stepcard">
           <h3>
-            <i>07</i> Switch the site on {done(envs)}
+            <i>07</i> Project Showcase (projects without a token) {done(s.showcase)}
+          </h3>
+          {s.showcase ? (
+            <>
+              <p className="muted" style={{ margin: 0 }}>
+                {code(s.showcase)} · platform fee {showNow ? showNow.fee / 100 : "…"}% · {showNow ? showNow.count : "…"} projects
+              </p>
+              <div className="three">
+                <label className="field">
+                  <span>Platform fee on backing (%, max 10)</span>
+                  <input value={showFee} onChange={(e) => setShowFee(e.target.value)} inputMode="decimal" />
+                </label>
+                <div className="field" style={{ alignContent: "end" }}>
+                  <button className="btn" disabled={!!busy} onClick={() => call("Showcase fee", s.showcase!, showcaseAbi, "setFeeBps", [Math.round(Number(showFee) * 100)])}>
+                    Save fee
+                  </button>
+                </div>
+              </div>
+              <div className="three">
+                <label className="field">
+                  <span>Hide or unhide a project (number from its page)</span>
+                  <input value={hideId} onChange={(e) => setHideId(e.target.value.replace(/\D/g, ""))} inputMode="numeric" placeholder="e.g. 3" />
+                </label>
+                <div className="field" style={{ alignContent: "end" }}>
+                  <button className="btn" disabled={!!busy || !hideId} onClick={() => call("Hide project", s.showcase!, showcaseAbi, "setHidden", [BigInt(hideId), true])}>
+                    Hide
+                  </button>
+                </div>
+                <div className="field" style={{ alignContent: "end" }}>
+                  <button className="btn" disabled={!!busy || !hideId} onClick={() => call("Unhide project", s.showcase!, showcaseAbi, "setHidden", [BigInt(hideId), false])}>
+                    Unhide
+                  </button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="muted" style={{ margin: 0 }}>A separate contract where builders list projects without a token and people back them with ETH. The fee goes to the same treasury as the launchpad.</p>
+              <div className="two">
+                <label className="field">
+                  <span>Platform fee on backing (%, max 10)</span>
+                  <input value={showFee} onChange={(e) => setShowFee(e.target.value)} inputMode="decimal" />
+                </label>
+              </div>
+              <button
+                className="btn"
+                disabled={!!busy || !s.factory}
+                onClick={() =>
+                  step("Showcase", async (w) => {
+                    const tr = s.factory ? ((await pc.readContract({ address: s.factory, abi: factoryAbi, functionName: "treasury" })) as Address) : w.account;
+                    const rc = await deployContract(w, showcaseArt, [w.account, tr, Math.round(Number(showFee) * 100)]);
+                    save({ showcase: rc.contractAddress!, showcaseBlock: String(rc.blockNumber) });
+                  })
+                }
+              >
+                Deploy Showcase
+              </button>
+            </>
+          )}
+        </section>
+
+        <section className="panel stepcard">
+          <h3>
+            <i>08</i> Switch the site on {done(envs)}
           </h3>
           {envs ? (
             <>

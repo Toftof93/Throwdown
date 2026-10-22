@@ -24,6 +24,9 @@ export const ROUTER = addr(process.env.NEXT_PUBLIC_ROUTER);
 export const START_BLOCK = BigInt(clean(process.env.NEXT_PUBLIC_START_BLOCK).replace(/\D/g, "") || "0");
 export const RPC_URL = process.env.RPC_URL || process.env.NEXT_PUBLIC_RPC_URL || CHAIN.rpcUrls.default.http[0];
 export const LIVE = Boolean(FACTORY && ROUTER && POOL_MANAGER);
+// Project Showcase (projects without a token) lives in its own contract and can be switched on separately.
+export const SHOWCASE = addr(process.env.NEXT_PUBLIC_SHOWCASE);
+export const SHOWCASE_BLOCK = BigInt(clean(process.env.NEXT_PUBLIC_SHOWCASE_BLOCK).replace(/\D/g, "") || "0") || START_BLOCK;
 export const MISSING = [!POOL_MANAGER && "NEXT_PUBLIC_POOL_MANAGER", !FACTORY && "NEXT_PUBLIC_FACTORY", !ROUTER && "NEXT_PUBLIC_ROUTER"].filter(Boolean) as string[];
 export const EXPLORER = CHAIN.blockExplorers?.default.url ?? "";
 export const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://throwdown.fun";

@@ -2,12 +2,14 @@ import factory from "./abi/ThrowdownFactory.json";
 import router from "./abi/ThrowRouter.json";
 import hook from "./abi/ThrowHook.json";
 import token from "./abi/ThrowToken.json";
+import showcase from "./abi/ThrowShowcase.json";
 import { parseAbi, type Abi } from "viem";
 
 export const factoryAbi = factory.abi as Abi;
 export const routerAbi = router.abi as Abi;
 export const hookAbi = hook.abi as Abi;
 export const tokenAbi = token.abi as Abi;
+export const showcaseAbi = showcase.abi as Abi;
 
 export const poolManagerAbi = parseAbi([
   "event Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)",
