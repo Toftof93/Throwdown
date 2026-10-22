@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { decodeEventLog, parseEther, type Address } from "viem";
 import { Prospectus } from "./Prospectus";
-import { FACTORY, LIVE } from "@/lib/config";
+import { FACTORY, LIVE, MISSING } from "@/lib/config";
 import { factoryAbi } from "@/lib/abi";
 import { connect, publicClient, walletMessage } from "@/lib/wallet";
 import { fmtNum } from "@/lib/math";
@@ -120,7 +120,7 @@ export function LaunchForm({ initialMode, answerId }: { initialMode: Mode; answe
         <p className="muted" style={{ fontSize: 16, margin: 0 }}>
           Memecoin, community or real project: launch its token free, you only pay gas. Every launch fights in today's Arena; start a 1v1 if you've got someone in mind.
         </p>
-        {!LIVE && <p className="notice warn" style={{ marginTop: 18 }}>Throwdown opens soon. You can set up your project now; launching switches on at launch.</p>}
+        {!LIVE && <p className="notice warn" style={{ marginTop: 18 }}>Throwdown opens soon. You can set up your project now; launching switches on at launch.{MISSING.length ? ` (Not set: ${MISSING.join(", ")})` : ""}</p>}
         <form className="form" onSubmit={submit}>
           <div className="mode" role="tablist">
             <button type="button" className={mode === "arena" ? "on" : ""} onClick={() => setMode("arena")}>
