@@ -4,7 +4,7 @@ import type { CoinCard } from "@/lib/data";
 
 export function Ladder({ coins, usd, limit }: { coins: CoinCard[]; usd: number | null; limit?: number }) {
   const list = limit ? coins.slice(0, limit) : coins;
-  if (!list.length) return <p className="empty">No coins in this round yet. The first one in is leading.</p>;
+  if (!list.length) return <p className="empty">No projects in this round yet. The first one in is leading.</p>;
   return (
     <ol className="ladder">
       {list.map((c, i) => (

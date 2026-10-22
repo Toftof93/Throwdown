@@ -87,7 +87,7 @@ export function ArenaView() {
             {busy === `feed${b.round}` ? "Collecting…" : "Collect fees into the pool"}
           </button>
           <a className="btn bell" href="/launch">
-            Enter a coin
+            Enter a project
           </a>
         </div>
       )}

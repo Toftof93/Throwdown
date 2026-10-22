@@ -57,7 +57,7 @@ export function BattleView({ id }: { id: number }) {
       const hash = await wallet.writeContract({ account, chain: wallet.chain, address: FACTORY!, abi: factoryAbi, functionName: "settleBattle", args: [BigInt(f.id)] });
       const rc = await publicClient.waitForTransactionReceipt({ hash });
       if (rc.status !== "success") throw new Error("The transaction failed.");
-      setMsg({ text: "Fight settled. The winner's coins were bought back and burned.", kind: "ok" });
+      setMsg({ text: "Fight settled. The winner's tokens were bought back and burned.", kind: "ok" });
       void load();
     } catch (e) {
       setMsg({ text: walletMessage(e), kind: "err" });
@@ -148,10 +148,10 @@ export function BattleView({ id }: { id: number }) {
             <h3>The rules</h3>
           </div>
           <ul className="goal-list" style={{ listStyle: "none", padding: "12px 16px", margin: 0, display: "grid", gap: 8, color: "var(--ink-2)", fontSize: 14 }}>
-            <li>Both coins open at the same second. The fight lasts 24 hours.</li>
+            <li>Both projects open at the same second. The fight lasts 24 hours.</li>
             <li>Score = ETH flowing in: buys minus sells. Buying and selling back scores nothing.</li>
-            <li>20% of both coins' ETH fees during the fight go into the pot. The winner's pot buys its coin back and burns it.</li>
-            <li>Both coins also fight in the daily Arena at the same time.</li>
+            <li>20% of both sides' ETH fees during the fight go into the pot. The pot buys back the winner's token and burns it.</li>
+            <li>Both projects also fight in the daily Arena at the same time.</li>
           </ul>
         </div>
       </div>

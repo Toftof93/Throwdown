@@ -1,6 +1,6 @@
 # Throwdown
 
-**Coins that fight.** The first launchpad where coins fight on Robinhood Chain. Launch into the Arena or challenge a rival, and the winners eat the losers' fees.
+**Projects that fight.** The first launchpad where projects fight on Robinhood Chain. Memecoins, communities and real projects launch their token and fight. Launch into the Arena or challenge a rival, and the winners eat the losers' fees.
 
 - **The Arena.** Every coin fights in a 24-hour round (UTC days). When the round ends, the three coins with the most **net ETH in** (buys minus sells, counted on-chain by the hook) win the prize pool, split 50/30/20. Each prize buys the coin back and burns it.
 - **Challenges.** Launch a coin that calls out a rival ticker. Anyone can answer within an hour; both coins open at the same second and fight for 24 hours. 20% of both sides' ETH fees go to a pot that buys back the winner.

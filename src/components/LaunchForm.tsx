@@ -70,7 +70,7 @@ export function LaunchForm({ initialMode, answerId }: { initialMode: Mode; answe
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!FACTORY) return;
-    if (!f.name.trim() || !symbol) return setMsg({ text: "Give your coin a name and a ticker.", kind: "err" });
+    if (!f.name.trim() || !symbol) return setMsg({ text: "Give your project a name and a ticker.", kind: "err" });
     if (mode === "challenge" && !rival) return setMsg({ text: "Name the ticker you're calling out.", kind: "err" });
     if (mode === "answer" && !target) return setMsg({ text: "That challenge couldn't be found.", kind: "err" });
     setBusy(true);
@@ -113,14 +113,14 @@ export function LaunchForm({ initialMode, answerId }: { initialMode: Mode; answe
   return (
     <main className="listing wrap">
       <div>
-        <p className="eyebrow">Launch a coin</p>
+        <p className="eyebrow">Launch your project</p>
         <h1 className="display">
           Step into <em>the ring.</em>
         </h1>
         <p className="muted" style={{ fontSize: 16, margin: 0 }}>
-          Free to launch, you only pay gas. Every coin fights in today's Arena; start a 1v1 if you've got someone in mind.
+          Memecoin, community or real project: launch its token free, you only pay gas. Every launch fights in today's Arena; start a 1v1 if you've got someone in mind.
         </p>
-        {!LIVE && <p className="notice warn" style={{ marginTop: 18 }}>Throwdown opens soon. You can set up your coin now; launching switches on at launch.</p>}
+        {!LIVE && <p className="notice warn" style={{ marginTop: 18 }}>Throwdown opens soon. You can set up your project now; launching switches on at launch.</p>}
         <form className="form" onSubmit={submit}>
           <div className="mode" role="tablist">
             <button type="button" className={mode === "arena" ? "on" : ""} onClick={() => setMode("arena")}>
@@ -140,17 +140,17 @@ export function LaunchForm({ initialMode, answerId }: { initialMode: Mode; answe
             <label className="field">
               <span>Who are you calling out?</span>
               <input value={f.rival} onChange={set("rival")} maxLength={10} placeholder="DOGS" aria-label="Rival ticker" />
-              <small>Anyone can answer as ${rival || "DOGS"} in the next hour. Both coins open at the same second and fight for 24 hours.</small>
+              <small>Anyone can answer as ${rival || "DOGS"} in the next hour. Both open at the same second and fight for 24 hours.</small>
             </label>
           )}
           {mode === "answer" && target && (
             <p className="notice warn">
-              You're answering ${target.symbol}'s challenge. Both coins open at {new Date(target.start * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}.
+              You're answering ${target.symbol}'s challenge. Both open at {new Date(target.start * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}.
             </p>
           )}
           <div className="two">
             <label className="field">
-              <span>Name</span>
+              <span>Project or token name</span>
               <input value={f.name} onChange={set("name")} maxLength={40} placeholder="Cat Army" required />
             </label>
             <label className="field">
@@ -159,8 +159,8 @@ export function LaunchForm({ initialMode, answerId }: { initialMode: Mode; answe
             </label>
           </div>
           <label className="field">
-            <span>Why should people fight for it?</span>
-            <textarea value={f.description} onChange={set("description")} maxLength={500} placeholder="Rally your side." />
+            <span>What is it, and why should people fight for it?</span>
+            <textarea value={f.description} onChange={set("description")} maxLength={500} placeholder="Your project in a few lines. Rally your side." />
           </label>
           <label className="field">
             <span>Image link</span>
@@ -191,7 +191,7 @@ export function LaunchForm({ initialMode, answerId }: { initialMode: Mode; answe
               ))}
             </div>
             <small className="muted">
-              Lock ETH as a promise your wallet won't sell or move this coin for 30 days. Keep it and it comes back. Break it and it buys the coin back and burns it.{bond ? ` You'll send ${fmtNum(bond, 2)} ETH with the launch.` : ""}
+              Lock ETH as a promise your wallet won't sell or move this token for 30 days. Keep it and it comes back. Break it and it buys the token back and burns it.{bond ? ` You'll send ${fmtNum(bond, 2)} ETH with the launch.` : ""}
             </small>
           </fieldset>
 
@@ -217,7 +217,7 @@ export function LaunchForm({ initialMode, answerId }: { initialMode: Mode; answe
           <button className={`btn big full ${mode === "arena" ? "bell" : mode === "challenge" ? "red" : "blue"}`} disabled={busy || !LIVE || (mode === "answer" && !target)}>
             {busy ? "Launching…" : mode === "answer" && !target ? "Finding the challenge…" : mode === "arena" ? `Launch $${symbol || "TICKER"} into the Arena` : mode === "challenge" ? `Launch $${symbol || "TICKER"} and call out $${rival || "RIVAL"}` : `Answer with $${symbol || "TICKER"}`}
           </button>
-          <small className="muted">This creates your coin and its Uniswap v4 pool. It can't be undone. Coins are risky; only launch what you'd stand behind.</small>
+          <small className="muted">This creates your token and its Uniswap v4 pool. It can't be undone. Tokens are risky; only launch what you'd stand behind.</small>
         </form>
       </div>
       <Prospectus

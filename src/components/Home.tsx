@@ -17,18 +17,18 @@ export function Home() {
   return (
     <>
       <section className="poster">
-        <p className="eyebrow">The first launchpad where coins fight</p>
+        <p className="eyebrow">The first launchpad where projects fight</p>
         <h1 className="display">
           <span className="r">Pick a side.</span>
           <br />
-          <span className="b">Pump your coin.</span>
+          <span className="b">Back your project.</span>
           <br />
           Winner eats.
         </h1>
-        <p className="lead">Every coin fights in the Arena. Call out a rival for a 1v1. The winners eat the losers' fees as buybacks that burn their supply.</p>
+        <p className="lead">Memecoins, communities and real projects: everything that launches fights in the Arena. Call out a rival for a 1v1. The winners eat the losers' fees as buybacks that burn their supply.</p>
         <div className="cta-row">
           <a href="/launch" className="btn bell big">
-            Launch a coin
+            Launch your project
           </a>
           <a href="/launch?mode=challenge" className="btn red big">
             Start a fight
@@ -48,7 +48,7 @@ export function Home() {
             <div className="pool">
               {b ? fmtNum(b.pool, 4) : "–"} ETH{b?.ethUsd != null && <small>{fmtUsd(b.pool * b.ethUsd)}</small>}
             </div>
-            <p>10% of every fee collected. Top 3 coins by net ETH in split it 50/30/20 as buybacks.</p>
+            <p>10% of every fee collected. Top 3 projects by net ETH in split it 50/30/20 as buybacks.</p>
           </div>
           <div className="clock">
             <b>{b ? countdown(b.roundEnd - now) : "--:--"}</b>

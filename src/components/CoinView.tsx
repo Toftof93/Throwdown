@@ -29,7 +29,7 @@ export function CoinView({ address }: { address: Address }) {
       if (j.error) setErr(j.error);
       else setD(j);
     } catch {
-      setErr("Couldn't load this coin. Refresh to try again.");
+      setErr("Couldn't load this project. Refresh to try again.");
     }
   }, [address]);
   useEffect(() => {
@@ -60,7 +60,7 @@ export function CoinView({ address }: { address: Address }) {
     ["Total supply", `${fmtNum(d.supply, 3)} (fixed)`],
     ["Burned", d.burned ? fmtNum(d.burned) : "0"],
     ["Liquidity", "Locked forever"],
-    ["Creator coins", d.creatorAmount ? `${fmtNum(d.creatorAmount)} (${((d.creatorAmount / 1e9) * 100).toFixed(1)}%)` : "None"],
+    ["Creator tokens", d.creatorAmount ? `${fmtNum(d.creatorAmount)} (${((d.creatorAmount / 1e9) * 100).toFixed(1)}%)` : "None"],
     ["Creator lockup", d.locked ? (lockLeft > 0 ? `${Math.ceil(lockLeft / 86400)} days left` : "Ended") : d.creatorAmount ? "Not locked" : "–"],
     ["Bond", d.bond ? `${fmtNum(d.bond, 3)} ETH (${d.bondState})` : "None"],
     ["Fee split", `10% Arena${d.battle ? " · 20% pot in battle" : ""} · rest ${100 - d.protocolBps / 100}/${d.protocolBps / 100} creator/platform`],
@@ -70,7 +70,7 @@ export function CoinView({ address }: { address: Address }) {
     { label: "Fixed supply", good: true },
     { label: "Liquidity locked forever", good: true },
     ...(d.bond ? [{ label: d.bondState === "active" ? `Bonded ${fmtNum(d.bond, 2)} ETH` : d.bondState === "kept" ? "Bond kept" : "Bond broken", good: d.bondState === "active" || d.bondState === "kept" }] : []),
-    { label: !d.creatorAmount ? "No dev coins" : d.locked && lockLeft > 0 ? `Dev locked ${Math.ceil(lockLeft / 86400)}d` : "Dev coins unlocked", good: !d.creatorAmount || (d.locked > 0 && lockLeft > 0) },
+    { label: !d.creatorAmount ? "No dev tokens" : d.locked && lockLeft > 0 ? `Dev locked ${Math.ceil(lockLeft / 86400)}d` : "Dev tokens unlocked", good: !d.creatorAmount || (d.locked > 0 && lockLeft > 0) },
   ];
   const share = `https://x.com/intent/post?text=${encodeURIComponent(`$${d.symbol} is in the Throwdown Arena${d.rank ? `, ranked #${d.rank}` : ""}. Pick a side.\n\n${SITE}/c/${d.token}`)}`;
 

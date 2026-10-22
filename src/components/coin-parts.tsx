@@ -229,7 +229,7 @@ export function CreatorTools({ d, now, onDone }: { d: CoinDetail; now: number; o
       {d.locked > 0 && (
         <>
           <div className="quote-line">
-            <span>Locked coins</span>
+            <span>Locked tokens</span>
             <b>{fmtNum(d.locked)}</b>
           </div>
           <div className="quote-line">
@@ -238,7 +238,7 @@ export function CreatorTools({ d, now, onDone }: { d: CoinDetail; now: number; o
           </div>
           {now >= d.unlockAt ? (
             <button className="btn full" disabled={!!busy} onClick={() => run("Unlock", "unlock", [d.token])}>
-              Release my coins
+              Release my tokens
             </button>
           ) : (
             <div className="chips">

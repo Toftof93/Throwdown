@@ -45,7 +45,7 @@ export function Creators() {
       <h1 className="display">
         Your corner, <em>your cut.</em>
       </h1>
-      <p className="lead">Every trade on your coin pays a fee. 10% feeds the Arena pool, 20% feeds your battle pot while you're fighting, and you get 80% of the rest. Collect it from any of your coins, then withdraw.</p>
+      <p className="lead">Every trade on your token pays a fee. 10% feeds the Arena pool, 20% feeds your battle pot while you're fighting, and you get 80% of the rest. Collect it from any of your coins, then withdraw.</p>
       {!account ? (
         <button
           className="btn bell big"
@@ -95,7 +95,7 @@ export function Creators() {
             </div>
           ) : (
             <p className="notice">
-              This wallet hasn't launched a coin yet.{" "}
+              This wallet hasn't launched a project yet.{" "}
               <a className="link" href="/launch">
                 Step into the ring →
               </a>
