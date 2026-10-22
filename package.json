@@ -1,0 +1,37 @@
+{
+  "name": "throwdown",
+  "version": "1.0.0",
+  "description": "Throwdown: the launchpad where coins fight",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "compile": "hardhat compile && node scripts/export-abis.js",
+    "test": "hardhat test",
+    "chain": "hardhat node"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "hardhat": "^2.29.1",
+    "solc": "^0.8.28",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource/anton": "^5.3.0",
+    "@openzeppelin/contracts": "^5.4.0",
+    "@uniswap/v4-core": "^1.0.2",
+    "@uniswap/v4-periphery": "^1.0.3",
+    "geist": "^1.8.1",
+    "next": "^15.5.28",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "server-only": "^0.0.1",
+    "viem": "^2.57.8"
+  },
+  "private": true
+}

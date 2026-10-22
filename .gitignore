@@ -1,0 +1,9 @@
+node_modules
+.next
+artifacts
+cache
+typechain-types
+.env
+.env.local
+*.tsbuildinfo
+next-env.d.ts
