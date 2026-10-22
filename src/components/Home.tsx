@@ -6,7 +6,7 @@ import { Ladder } from "./Ladder";
 import { fmtNum, fmtUsd } from "@/lib/math";
 import type { BoardData } from "@/lib/data";
 
-const BILL = ["Live on Robinhood Chain", "24-hour rounds", "Net ETH in decides it", "Liquidity locked forever", "Bonded creators", "Winner eats"];
+const BILL = ["Live on Robinhood Chain", "Launch free, pay gas", "Ranked daily", "Top 3 win buybacks", "Liquidity locked forever", "1v1 if you want it"];
 
 export function Home() {
   const raw = useBoard() as (BoardData & { live: true }) | { live: false } | null;
@@ -33,17 +33,15 @@ export function Home() {
             ))}
           </div>
         </div>
-        <p className="eyebrow">The first launchpad where projects fight</p>
+        <p className="eyebrow">The first launchpad where projects can fight</p>
         <h1 className="display">
-          <span className="r">Pick a side.</span>
-          <br />
-          <span className="b">Back your project.</span>
+          <span className="r">Launch your project.</span>
           <br />
           <span className="w">
-            Winner <em>eats.</em>
+            Fight if you <em>want.</em>
           </span>
         </h1>
-        <p className="lead">Memecoins, communities and real projects: everything that launches fights in the Arena. Call out a rival for a 1v1. The winners eat the losers' fees as buybacks that burn their supply.</p>
+        <p className="lead">A launchpad on Robinhood Chain. Every launch gets ranked daily, and the top 3 win buybacks. Call out a rival for a 1v1 if you're feeling brave.</p>
         <div className="cta-row">
           <a href="/launch" className="btn bell big">
             Launch your project

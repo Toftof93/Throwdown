@@ -6,11 +6,11 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { SITE, CHAIN } from "@/lib/config";
 
-const description = "The first launchpad where projects fight on Robinhood Chain. Launch into the Arena or challenge a rival, and the winners eat the losers' fees.";
+const description = "A launchpad on Robinhood Chain. Launch your project, get ranked daily, and the top 3 win buybacks. Call out a rival for a 1v1 if you want.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
-  title: "Throwdown · The launchpad where projects fight",
+  title: "Throwdown · Launch your project. Fight if you want.",
   description,
   openGraph: { title: "Throwdown", description, siteName: "Throwdown" },
   twitter: { card: "summary_large_image", title: "Throwdown", description },
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         {children}
         <footer className="foot">
-          <span>Throwdown · Pick a side. Back your project. Winner eats.</span>
+          <span>Throwdown · Launch your project. Fight if you want.</span>
           <span>{CHAIN.name}. Tokens are risky and can go to zero. Nothing here is financial advice.</span>
         </footer>
       </body>
