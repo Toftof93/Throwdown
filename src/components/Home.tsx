@@ -6,6 +6,8 @@ import { Ladder } from "./Ladder";
 import { fmtNum, fmtUsd } from "@/lib/math";
 import type { BoardData } from "@/lib/data";
 
+const BILL = ["Live on Robinhood Chain", "24-hour rounds", "Net ETH in decides it", "Liquidity locked forever", "Bonded creators", "Winner eats"];
+
 export function Home() {
   const raw = useBoard() as (BoardData & { live: true }) | { live: false } | null;
   const b = raw && raw.live ? raw : null;
@@ -17,13 +19,29 @@ export function Home() {
   return (
     <>
       <section className="poster">
+        <div className="bill" aria-hidden>
+          <div className="bill-track">
+            {[0, 1].map((k) => (
+              <span key={k}>
+                {BILL.map((t) => (
+                  <span key={t}>
+                    {t}
+                    <i>★</i>
+                  </span>
+                ))}
+              </span>
+            ))}
+          </div>
+        </div>
         <p className="eyebrow">The first launchpad where projects fight</p>
         <h1 className="display">
           <span className="r">Pick a side.</span>
           <br />
           <span className="b">Back your project.</span>
           <br />
-          Winner eats.
+          <span className="w">
+            Winner <em>eats.</em>
+          </span>
         </h1>
         <p className="lead">Memecoins, communities and real projects: everything that launches fights in the Arena. Call out a rival for a 1v1. The winners eat the losers' fees as buybacks that burn their supply.</p>
         <div className="cta-row">
@@ -34,10 +52,19 @@ export function Home() {
             Start a fight
           </a>
         </div>
-        <div className="kicker-row">
-          <span>Liquidity locked forever</span>
-          <span>Net ETH in decides it</span>
-          <span>Bonded creators</span>
+        <div className="tale">
+          <div>
+            <b>{b ? b.arena.length + b.upcoming.length : "–"}</b>
+            <span>Projects</span>
+          </div>
+          <div>
+            <b>{b ? live.length + open.length : "–"}</b>
+            <span>Fights</span>
+          </div>
+          <div>
+            <b>{b ? `${fmtNum(b.pool, 3)} ETH` : "–"}</b>
+            <span>Prize pool</span>
+          </div>
         </div>
       </section>
 

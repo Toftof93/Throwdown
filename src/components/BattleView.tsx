@@ -125,6 +125,12 @@ export function BattleView({ id }: { id: number }) {
             <i className="b" style={{ width: `${(1 - share) * 100}%` }} />
           </div>
         )}
+        {d.b && (
+          <div className="tug-pct">
+            <span>{Math.round(share * 100)}%</span>
+            <span>{100 - Math.round(share * 100)}%</span>
+          </div>
+        )}
         <div className="meta">
           <span>Pot: {fmtNum(f.pot, 4)} ETH (20% of both sides' fees, more once fees are collected)</span>
           <span>Score: net ETH in during the fight</span>
