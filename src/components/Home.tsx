@@ -6,8 +6,6 @@ import { Ladder } from "./Ladder";
 import { fmtNum, fmtUsd } from "@/lib/math";
 import type { BoardData } from "@/lib/data";
 
-const BILL = ["Live on Robinhood Chain", "Launch free, pay gas", "Ranked daily", "Top 3 win buybacks", "Liquidity locked forever", "1v1 if you want it"];
-
 export function Home() {
   const raw = useBoard() as (BoardData & { live: true }) | { live: false } | null;
   const b = raw && raw.live ? raw : null;
@@ -19,20 +17,6 @@ export function Home() {
   return (
     <>
       <section className="poster">
-        <div className="bill" aria-hidden>
-          <div className="bill-track">
-            {[0, 1].map((k) => (
-              <span key={k}>
-                {BILL.map((t) => (
-                  <span key={t}>
-                    {t}
-                    <i>★</i>
-                  </span>
-                ))}
-              </span>
-            ))}
-          </div>
-        </div>
         <p className="eyebrow">The first launchpad where projects can fight</p>
         <h1 className="display">
           <span className="r">Launch your project.</span>
