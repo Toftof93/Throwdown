@@ -1,0 +1,54 @@
+<!doctype html><html><head><link rel="stylesheet" href="base.css"><style>
+.c { position: relative; width: 1600px; height: 900px; overflow: hidden; background: radial-gradient(ellipse 55% 70% at 50% 0%, #2e2409 0%, #0f0d08 55%, #070706 100%); display: none; }
+.c.on { display: block; }
+.dots { -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 45%, transparent 40%, #000 100%); }
+.rope { position: absolute; left: 0; right: 0; height: 12px; background: linear-gradient(rgba(246,241,232,.22),rgba(246,241,232,.22)) 0 0/100% 1px no-repeat, linear-gradient(rgba(255,197,49,.75),rgba(255,197,49,.75)) 0 5px/100% 2px no-repeat, linear-gradient(rgba(246,241,232,.22),rgba(246,241,232,.22)) 0 11px/100% 1px no-repeat; }
+.mark { position: absolute; left: 90px; top: 78px; display: flex; align-items: center; gap: 14px; font-family: Anton; font-size: 32px; letter-spacing: .03em; color: var(--ink); }
+.mark span { transform: skewX(-8deg); display: inline-block; }
+.mark svg { width: 46px; height: 46px; }
+.num { position: absolute; right: 90px; top: 80px; font-family: GeistMono; font-size: 20px; letter-spacing: .2em; color: #120e02; background: var(--bell); padding: 7px 14px; transform: rotate(-3deg); box-shadow: 4px 4px 0 #000; }
+.body { position: absolute; left: 90px; right: 90px; top: 210px; bottom: 120px; display: flex; flex-direction: column; justify-content: center; }
+.k { font-family: GeistMono; font-size: 22px; letter-spacing: .24em; color: var(--bell); text-transform: uppercase; margin-bottom: 22px; }
+h1 { font-family: Anton; font-weight: 400; text-transform: uppercase; font-size: 128px; line-height: .92; color: var(--ink); text-shadow: 7px 7px 0 #000; }
+h1 span { display: inline-block; transform: skewX(-7deg); }
+h1 .o { color: transparent; -webkit-text-stroke: 3px var(--ink); text-shadow: none; }
+h1 em { font-style: normal; color: var(--bell); }
+.rows { display: grid; gap: 18px; margin-top: 30px; }
+.row { display: flex; align-items: center; gap: 22px; font-family: Anton; font-size: 52px; text-transform: uppercase; color: var(--ink); }
+.row b { font-weight: 400; width: 64px; height: 64px; flex: none; display: grid; place-items: center; background: #000; border: 3px solid var(--bell); color: var(--bell); border-radius: 50%; font-size: 30px; }
+.big { font-family: Anton; font-size: 240px; line-height: .85; color: var(--bell); text-shadow: 8px 8px 0 #000; }
+.foot { position: absolute; left: 90px; bottom: 74px; font-family: GeistMono; font-size: 20px; letter-spacing: .14em; color: rgba(246,241,232,.55); }
+.bar { position: absolute; right: 90px; bottom: 70px; width: 520px; display: grid; grid-template-columns: 1fr 60px 1fr; gap: 14px; align-items: center; }
+.hp { height: 16px; transform: skewX(-24deg); border: 2px solid #000; box-shadow: 0 0 0 1px #34312a; position: relative; }
+.hp::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 14px, rgba(0,0,0,.45) 14px 16px); }
+.hp.g { background: linear-gradient(#ffd35c, #ffc531 55%, #b98a10); } .hp.w { background: linear-gradient(#fff, #efe9dc 55%, #bdb6a8); }
+.vs { width: 60px; height: 60px; border-radius: 50%; background: #000; border: 3px solid var(--bell); display: grid; place-items: center; font-family: Anton; font-size: 26px; color: var(--bell); transform: rotate(-8deg); }
+</style></head><body>
+<template id="chrome"><div class="dots"></div><div class="rope" style="top:30px"></div><div class="rope" style="bottom:30px"></div>
+<div class="mark"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#000"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#ffc531" stroke-opacity=".5" stroke-width="1.5"/><path d="M18.5 4 9.5 18h6l-2.5 10 10-15h-6.2L18.5 4Z" fill="#ffc531" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg><span>THROWDOWN</span></div>
+<div class="foot">COMING SOON · ROBINHOOD CHAIN</div>
+<div class="bar"><div class="hp g"></div><div class="vs">VS</div><div class="hp w"></div></div></template>
+
+<div class="c grain" id="t1"><div class="num">1 / 6</div><div class="body"><div class="k">Introducing</div>
+<h1><span>Every launchpad</span><br><span>lets you launch.</span><br><span class="o">Only one lets</span><br><span>your project <em>fight.</em></span></h1></div></div>
+
+<div class="c grain" id="t2"><div class="num">2 / 6</div><div class="body"><div class="k">Robinhood Chain today</div>
+<div style="display:flex;gap:80px;align-items:flex-end"><div><div class="big">95</div><div class="k" style="margin:10px 0 0">launchpads</div></div><div><div class="big" style="color:var(--ink)">850K</div><div class="k" style="margin:10px 0 0">tokens</div></div></div>
+<h1 style="font-size:84px;margin-top:40px"><span>Most disappear by <em>morning.</em></span></h1></div></div>
+
+<div class="c grain" id="t3"><div class="num">3 / 6</div><div class="body"><div class="k">How it works</div>
+<div class="rows"><div class="row"><b>1</b>Launch free. Liquidity locked forever.</div><div class="row"><b>2</b>Ranked daily by real money in.</div><div class="row"><b>3</b>Top 3 win buybacks that burn supply.</div><div class="row" style="color:var(--bell)"><b>0</b>Fake volume scores zero.</div></div></div></div>
+
+<div class="c grain" id="t4"><div class="num">4 / 6</div><div class="body"><div class="k">The 1v1</div>
+<h1><span>Got a rival?</span><br><span class="o">Call them out.</span></h1>
+<div class="rows" style="margin-top:34px"><div class="row" style="font-size:40px"><b>1h</b>To answer. Both launch at the same second.</div><div class="row" style="font-size:40px"><b>24h</b>Net ETH in decides it. Winner takes the pot.</div></div></div></div>
+
+<div class="c grain" id="t5"><div class="num">5 / 6</div><div class="body"><div class="k">The Showcase</div>
+<h1><span>No token?</span><br><span><em>Still fight.</em></span></h1>
+<div class="rows" style="margin-top:34px"><div class="row" style="font-size:40px"><b>Ξ</b>Get backed with ETH, straight to your wallet.</div><div class="row" style="font-size:40px"><b>#1</b>Climb the daily ranking.</div></div></div></div>
+
+<div class="c grain" id="t6"><div class="num">6 / 6</div><div class="body"><div class="k">The first launchpad where projects can fight</div>
+<h1><span>Launch your project.</span><br><span class="o">Fight if you <em style="-webkit-text-stroke:0">want.</em></span></h1>
+<div class="k" style="margin:40px 0 0;color:var(--ink)">Follow so you don't miss the bell</div></div></div>
+<script>document.querySelectorAll(".c").forEach(c => c.insertAdjacentHTML("afterbegin", document.getElementById("chrome").innerHTML));</script>
+</body></html>
