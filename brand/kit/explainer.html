@@ -1,0 +1,242 @@
+<!doctype html><html><head><link rel="stylesheet" href="base.css"><style>
+/* A 30-second "How Throwdown works" explainer. render(t) draws the frame at t seconds. */
+.stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: radial-gradient(ellipse 55% 70% at 50% 0%, #2e2409 0%, #0f0d08 55%, #070706 100%); color: var(--ink); }
+.dots { -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 45%, transparent 40%, #000 100%); }
+.rope { position: absolute; left: 0; right: 0; height: 12px; background: linear-gradient(rgba(246,241,232,.22),rgba(246,241,232,.22)) 0 0/100% 1px no-repeat, linear-gradient(rgba(255,197,49,.75),rgba(255,197,49,.75)) 0 5px/100% 2px no-repeat, linear-gradient(rgba(246,241,232,.22),rgba(246,241,232,.22)) 0 11px/100% 1px no-repeat; }
+.mark { position: absolute; left: 110px; top: 84px; display: flex; align-items: center; gap: 14px; font-family: Anton; font-size: 34px; letter-spacing: .03em; }
+.mark span { transform: skewX(-8deg); display: inline-block; }
+.mark svg { width: 48px; height: 48px; }
+.steps { position: absolute; right: 110px; top: 96px; display: flex; gap: 10px; }
+.steps i { width: 46px; height: 8px; background: #2a2720; transform: skewX(-24deg); }
+.steps i.on { background: var(--bell); }
+.scene { position: absolute; inset: 0; opacity: 0; }
+.el { will-change: transform, opacity; }
+.k { font-family: GeistMono; font-size: 24px; letter-spacing: .24em; color: var(--bell); text-transform: uppercase; }
+.h { font-family: Anton; font-weight: 400; text-transform: uppercase; line-height: .92; text-shadow: 7px 7px 0 #000; }
+.h span { display: inline-block; transform: skewX(-7deg); }
+.h em { font-style: normal; color: var(--bell); }
+.h .o { color: transparent; -webkit-text-stroke: 3px var(--ink); text-shadow: none; }
+.sub { font-family: GeistMono; font-size: 28px; line-height: 1.5; color: rgba(246,241,232,.78); }
+.left { position: absolute; left: 140px; top: 270px; width: 820px; }
+.num { font-family: Anton; font-size: 210px; line-height: .8; color: transparent; -webkit-text-stroke: 3px rgba(255,197,49,.55); }
+.right { position: absolute; left: 1040px; top: 250px; width: 760px; height: 600px; }
+.tile { display: grid; place-items: center; background: #efe9dc; color: #0b0a0d; font-family: Anton; border: 4px solid #000; box-shadow: 8px 8px 0 #000; border-radius: 16px; }
+.chip { display: inline-flex; align-items: center; gap: 12px; font-family: GeistMono; font-size: 24px; letter-spacing: .1em; padding: 12px 20px; background: #000; border: 2px solid var(--bell); color: var(--bell); border-radius: 6px; box-shadow: 5px 5px 0 rgba(0,0,0,.6); }
+.panel { background: #131210; border: 2px solid #000; box-shadow: 0 0 0 1px #34312a; border-radius: 10px; }
+.row { display: grid; grid-template-columns: 70px 64px 1fr 150px; gap: 18px; align-items: center; padding: 16px 22px; border-top: 1px dashed #26241f; }
+.row:first-child { border-top: 0; }
+.row .rk { font-family: Anton; font-size: 46px; text-align: center; color: transparent; -webkit-text-stroke: 1.5px #8c867a; }
+.row.p .rk { color: var(--bell); -webkit-text-stroke: 0; text-shadow: 3px 3px 0 #000; }
+.row.p { background: linear-gradient(90deg, rgba(255,197,49,.1), transparent 60%); box-shadow: inset 4px 0 0 var(--bell); }
+.row .nm { font-family: Anton; font-size: 34px; }
+.bar { height: 14px; background: #000; border-radius: 2px; overflow: hidden; margin-top: 8px; transform: skewX(-24deg); }
+.bar i { display: block; height: 100%; background: linear-gradient(#ffd35c, #ffc531 55%, #b98a10); }
+.row .v { font-family: GeistMono; font-size: 26px; text-align: right; }
+.pod { position: absolute; bottom: 120px; width: 210px; display: grid; justify-items: center; gap: 14px; }
+.pod .blk { width: 100%; background: linear-gradient(#ffd35c, #ffc531 40%, #b98a10); border: 3px solid #000; box-shadow: 8px 8px 0 #000; display: grid; place-items: center; font-family: Anton; font-size: 64px; color: #120e02; transform-origin: bottom; }
+.pod.s .blk { background: linear-gradient(#fff, #efe9dc 40%, #bdb6a8); }
+.stamp { position: absolute; left: 70px; top: -70px; font-family: Anton; font-size: 64px; letter-spacing: .04em; color: var(--bell); border: 6px solid var(--bell); padding: 6px 26px; background: rgba(0,0,0,.6); }
+.hp { height: 30px; display: flex; transform: skewX(-24deg); border: 3px solid #000; box-shadow: 0 0 0 1px #34312a; position: relative; background: #000; }
+.hp::before { content: ""; position: absolute; inset: 0; z-index: 1; background: repeating-linear-gradient(90deg, transparent 0 22px, rgba(0,0,0,.45) 22px 25px); }
+.hp::after { content: ""; position: absolute; left: 50%; top: -7px; bottom: -7px; width: 4px; background: var(--bell); z-index: 2; box-shadow: 0 0 12px var(--bell); }
+.hp .g { background: linear-gradient(#ffd35c, #ffc531 55%, #b98a10); }
+.hp .w { background: linear-gradient(#fff, #efe9dc 55%, #bdb6a8); }
+.vs { width: 110px; height: 110px; border-radius: 50%; background: #000; border: 4px solid var(--bell); display: grid; place-items: center; font-family: Anton; font-size: 50px; color: var(--bell); box-shadow: 0 0 0 10px rgba(255,197,49,.12); }
+.feed { display: grid; gap: 14px; }
+.feed .f { display: grid; grid-template-columns: 14px 1fr auto; gap: 18px; align-items: center; padding: 18px 24px; font-family: GeistMono; font-size: 26px; }
+.feed .f i { width: 14px; height: 14px; border-radius: 50%; background: var(--bell); }
+.feed .f em { font-style: normal; color: var(--bell); }
+.flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+</style></head><body>
+<div class="stage grain" id="stage">
+  <div class="dots"></div>
+  <div class="rope" style="top:34px"></div><div class="rope" style="bottom:34px"></div>
+  <div class="mark el" id="mark"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#000"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#ffc531" stroke-opacity=".5" stroke-width="1.5"/><path d="M18.5 4 9.5 18h6l-2.5 10 10-15h-6.2L18.5 4Z" fill="#ffc531" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg><span>THROWDOWN</span></div>
+  <div class="steps el" id="steps"><i></i><i></i><i></i><i></i><i></i></div>
+
+  <!-- 0: intro -->
+  <div class="scene" id="s0">
+    <div style="position:absolute;left:0;right:0;top:330px;text-align:center">
+      <div class="k el" id="s0k">The first launchpad where projects can fight</div>
+      <div class="h el" id="s0h" style="font-size:200px;margin-top:34px"><span>How <em>Throwdown</em></span><br><span class="o">works</span></div>
+    </div>
+  </div>
+
+  <!-- 1: launch free -->
+  <div class="scene" id="s1">
+    <div class="left">
+      <div class="num el" id="s1n">01</div>
+      <div class="h el" id="s1h" style="font-size:130px;margin-top:10px"><span>Launch <em>free.</em></span></div>
+      <div class="sub el" id="s1s" style="margin-top:28px">You only pay gas.<br>Liquidity locked forever.<br>Nobody can pull the rug.</div>
+    </div>
+    <div class="right">
+      <div class="tile el" id="s1t" style="position:absolute;left:220px;top:60px;width:320px;height:320px;font-size:96px">FROG</div>
+      <div class="chip el" id="s1c1" style="position:absolute;left:120px;top:440px">LIQUIDITY LOCKED FOREVER</div>
+      <div class="chip el" id="s1c2" style="position:absolute;left:250px;top:520px">$0 TO LAUNCH</div>
+    </div>
+  </div>
+
+  <!-- 2: ranked daily -->
+  <div class="scene" id="s2">
+    <div class="left">
+      <div class="num el" id="s2n">02</div>
+      <div class="h el" id="s2h" style="font-size:130px;margin-top:10px"><span>Ranked <em>daily.</em></span></div>
+      <div class="sub el" id="s2s" style="margin-top:28px">Every launch fights in a 24-hour round.<br>Score = real money in: buys minus sells.<br>Fake volume scores zero.</div>
+    </div>
+    <div class="right">
+      <div class="panel el" id="s2p" style="position:absolute;left:0;top:60px;width:760px">
+        <div class="row p"><span class="rk">1</span><div class="tile" style="width:64px;height:64px;font-size:16px;border-width:2px;box-shadow:3px 3px 0 #000;border-radius:10px">FROG</div><div><div class="nm">$FROG</div><div class="bar"><i id="b1"></i></div></div><div class="v" id="v1">+0.00</div></div>
+        <div class="row p"><span class="rk">2</span><div class="tile" style="width:64px;height:64px;font-size:16px;border-width:2px;box-shadow:3px 3px 0 #000;border-radius:10px">CATS</div><div><div class="nm">$CATS</div><div class="bar"><i id="b2"></i></div></div><div class="v" id="v2">+0.00</div></div>
+        <div class="row p"><span class="rk">3</span><div class="tile" style="width:64px;height:64px;font-size:16px;border-width:2px;box-shadow:3px 3px 0 #000;border-radius:10px">DOGE</div><div><div class="nm">$DOGE</div><div class="bar"><i id="b3"></i></div></div><div class="v" id="v3">+0.00</div></div>
+        <div class="row"><span class="rk">4</span><div class="tile" style="width:64px;height:64px;font-size:16px;border-width:2px;box-shadow:3px 3px 0 #000;border-radius:10px">BULL</div><div><div class="nm">$BULL</div><div class="bar"><i id="b4"></i></div></div><div class="v" id="v4">+0.00</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3: top 3 win buybacks -->
+  <div class="scene" id="s3">
+    <div class="left">
+      <div class="num el" id="s3n">03</div>
+      <div class="h el" id="s3h" style="font-size:130px;margin-top:10px"><span>Top 3 <em>win.</em></span></div>
+      <div class="sub el" id="s3s" style="margin-top:28px">The daily prize pool buys back<br>the winners' tokens 50 / 30 / 20<br>and burns them.</div>
+    </div>
+    <div class="right">
+      <div class="pod s" style="left:20px"><div class="blk" id="p2" style="height:240px">30%</div><div class="k">#2</div></div>
+      <div class="pod" style="left:275px"><div class="blk" id="p1" style="height:340px">50%</div><div class="k">#1</div></div>
+      <div class="pod s" style="left:530px"><div class="blk" id="p3" style="height:170px">20%</div><div class="k">#3</div></div>
+      <div class="stamp el" id="s3st">BOUGHT BACK + BURNED</div>
+    </div>
+  </div>
+
+  <!-- 4: call out a rival -->
+  <div class="scene" id="s4">
+    <div class="left">
+      <div class="num el" id="s4n">04</div>
+      <div class="h el" id="s4h" style="font-size:118px;margin-top:10px"><span>Call out</span><br><span>a <em>rival.</em></span></div>
+      <div class="sub el" id="s4s" style="margin-top:28px">They get 1 hour to answer.<br>Both launch at the same second.<br>24 hours. Winner takes the pot.</div>
+    </div>
+    <div class="right">
+      <div class="tile el" id="s4a" style="position:absolute;left:30px;top:80px;width:220px;height:220px;font-size:64px;outline:3px solid var(--bell);outline-offset:6px">TOAD</div>
+      <div class="vs el" id="s4v" style="position:absolute;left:325px;top:135px">VS</div>
+      <div class="tile el" id="s4b" style="position:absolute;left:510px;top:80px;width:220px;height:220px;font-size:64px;outline:3px solid #efe9dc;outline-offset:6px">LILY</div>
+      <div class="el" id="s4bar" style="position:absolute;left:10px;top:400px;width:740px">
+        <div class="hp"><i class="g" id="hg" style="width:50%"></i><i class="w" id="hw" style="width:50%"></i></div>
+        <div style="display:flex;justify-content:space-between;margin-top:16px;font-family:Anton;font-size:46px"><span id="pg" style="color:var(--bell)">50%</span><span id="pw">50%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5: showcase -->
+  <div class="scene" id="s5">
+    <div class="left">
+      <div class="num el" id="s5n">05</div>
+      <div class="h el" id="s5h" style="font-size:118px;margin-top:10px"><span>No token?</span><br><span><em>Still fight.</em></span></div>
+      <div class="sub el" id="s5s" style="margin-top:28px">List it on the Showcase.<br>Get backed with ETH,<br>straight to your wallet.</div>
+    </div>
+    <div class="right">
+      <div class="k el" id="s5k" style="position:absolute;left:4px;top:40px">Backers' wall</div>
+      <div class="feed" style="position:absolute;left:0;top:100px;width:760px">
+        <div class="f panel el" id="f1"><i></i><span>0x14dc… "gm builder"</span><em>+0.5 ETH</em></div>
+        <div class="f panel el" id="f2"><i></i><span>0x2361… "keep building"</span><em>+0.25 ETH</em></div>
+        <div class="f panel el" id="f3"><i></i><span>0x8f0a… "first backer"</span><em>+0.1 ETH</em></div>
+        <div class="f panel el" id="f4"><i></i><span>0x5b7e… "ship it"</span><em>+0.05 ETH</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6: end card -->
+  <div class="scene" id="s6">
+    <div style="position:absolute;left:0;right:0;top:280px;text-align:center">
+      <div class="el" id="s6m" style="display:inline-block"><svg viewBox="0 0 32 32" style="width:120px;height:120px"><rect width="32" height="32" rx="9" fill="#000"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#ffc531" stroke-opacity=".6" stroke-width="1.2"/><path d="M18.5 4 9.5 18h6l-2.5 10 10-15h-6.2L18.5 4Z" fill="#ffc531" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+      <div class="h el" id="s6h" style="font-size:150px;margin-top:30px"><span>Launch your project.</span><br><span class="o">Fight if you <em style="-webkit-text-stroke:0">want.</em></span></div>
+      <div class="k el" id="s6k" style="margin-top:46px;color:var(--ink)">Coming soon · Robinhood Chain</div>
+    </div>
+  </div>
+  <div class="flash" id="flash"></div>
+</div>
+<script>
+const SCENES = [[0, 3.6], [3.6, 8.4], [8.4, 13.2], [13.2, 18], [18, 22.8], [22.8, 27.4], [27.4, 31]];
+const DURATION = 31;
+const $ = (id) => document.getElementById(id);
+const clamp = (x) => Math.max(0, Math.min(1, x));
+const ease = (x) => 1 - Math.pow(1 - clamp(x), 3);
+const back = (x) => { x = clamp(x); const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+
+// Element enters at `d` seconds into its scene. kind: up | slam | left | right | pop
+function enter(id, lt, d, kind = "up", dur = 0.5) {
+  const el = $(id); if (!el) return 0;
+  const raw = (lt - d) / dur, p = ease(raw), b = back(raw);
+  let tf = "";
+  if (kind === "up") tf = `translateY(${(1 - p) * 50}px)`;
+  if (kind === "slam") tf = `scale(${1.5 - 0.5 * b})`;
+  if (kind === "left") tf = `translateX(${(1 - p) * -260}px)`;
+  if (kind === "right") tf = `translateX(${(1 - p) * 260}px)`;
+  if (kind === "pop") tf = `scale(${0.4 + 0.6 * b})`;
+  el.style.opacity = clamp(raw * 1.6);
+  el.style.transform = tf;
+  return p;
+}
+
+function render(t) {
+  // Scene visibility: fade in quickly, fade out at the end.
+  SCENES.forEach(([a, z], i) => {
+    const s = $("s" + i);
+    const inn = clamp((t - a) / 0.25), out = i === SCENES.length - 1 ? 1 : clamp((z - t) / 0.3);
+    s.style.opacity = Math.min(inn, out);
+    s.style.visibility = t >= a - 0.01 && t <= z + 0.01 ? "visible" : "hidden";
+  });
+  // A white flash on each scene change, like a camera pop.
+  const cut = SCENES.slice(1).map(([a]) => a).find((a) => t >= a && t < a + 0.18);
+  $("flash").style.opacity = cut != null ? 0.18 * (1 - (t - cut) / 0.18) : 0;
+  // Step meter for scenes 1-5.
+  [...$("steps").children].forEach((d, i) => d.classList.toggle("on", t >= SCENES[i + 1][0]));
+  $("steps").style.opacity = clamp((t - 3.4) / 0.4) * clamp((27.4 - t) / 0.3);
+  $("mark").style.opacity = clamp(t / 0.6) * clamp((27.4 - t) / 0.3);
+
+  let lt = t - SCENES[0][0];
+  enter("s0k", lt, 0.2, "up"); enter("s0h", lt, 0.5, "slam", 0.45);
+
+  lt = t - SCENES[1][0];
+  enter("s1n", lt, 0.05, "left"); enter("s1h", lt, 0.2, "slam", 0.4); enter("s1s", lt, 0.7, "up");
+  enter("s1t", lt, 0.5, "pop", 0.55); enter("s1c1", lt, 1.4, "right"); enter("s1c2", lt, 1.9, "right");
+  $("s1t").style.transform += ` rotate(${-6 + 6 * ease((lt - 0.5) / 0.8)}deg)`;
+
+  lt = t - SCENES[2][0];
+  enter("s2n", lt, 0.05, "left"); enter("s2h", lt, 0.2, "slam", 0.4); enter("s2s", lt, 0.7, "up"); enter("s2p", lt, 0.5, "right");
+  const vals = [2.0, 0.8, 0.5, 0.2];
+  vals.forEach((v, i) => {
+    const p = ease((lt - 1.0 - i * 0.15) / 2.2);
+    $("b" + (i + 1)).style.width = `${(v / 2.0) * 100 * p}%`;
+    $("v" + (i + 1)).textContent = `+${(v * p).toFixed(2)}`;
+  });
+
+  lt = t - SCENES[3][0];
+  enter("s3n", lt, 0.05, "left"); enter("s3h", lt, 0.2, "slam", 0.4); enter("s3s", lt, 0.7, "up");
+  [["p2", 0.7], ["p1", 0.5], ["p3", 0.9]].forEach(([id, d]) => {
+    const p = back((lt - d) / 0.6);
+    $(id).style.transform = `scaleY(${Math.max(0, p)})`;
+    $(id).style.opacity = clamp((lt - d) * 4);
+  });
+  enter("s3st", lt, 2.2, "slam", 0.35);
+  $("s3st").style.transform += " rotate(-6deg)";
+
+  lt = t - SCENES[4][0];
+  enter("s4n", lt, 0.05, "left"); enter("s4h", lt, 0.2, "slam", 0.4); enter("s4s", lt, 0.7, "up");
+  enter("s4a", lt, 0.4, "left"); enter("s4b", lt, 0.4, "right"); enter("s4v", lt, 0.8, "pop", 0.4); enter("s4bar", lt, 1.1, "up");
+  // Gold pulls ahead, white fights back, gold wins.
+  const x = clamp((lt - 1.5) / 3);
+  const share = 0.5 + 0.18 * Math.sin(x * Math.PI * 1.5) * (1 - x) + 0.16 * ease(x);
+  $("hg").style.width = `${share * 100}%`; $("hw").style.width = `${(1 - share) * 100}%`;
+  $("pg").textContent = `${Math.round(share * 100)}%`; $("pw").textContent = `${100 - Math.round(share * 100)}%`;
+
+  lt = t - SCENES[5][0];
+  enter("s5n", lt, 0.05, "left"); enter("s5h", lt, 0.2, "slam", 0.4); enter("s5s", lt, 0.7, "up"); enter("s5k", lt, 0.6, "up");
+  ["f1", "f2", "f3", "f4"].forEach((id, i) => enter(id, lt, 0.9 + i * 0.55, "right", 0.4));
+
+  lt = t - SCENES[6][0];
+  enter("s6m", lt, 0.15, "pop", 0.5); enter("s6h", lt, 0.5, "slam", 0.45); enter("s6k", lt, 1.3, "up");
+}
+window.render = render; window.DURATION = DURATION; window.SCENES = SCENES;
+render(0);
+</script>
+</body></html>
