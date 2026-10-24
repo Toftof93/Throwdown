@@ -1,0 +1,28 @@
+<!doctype html><html><head><link rel="stylesheet" href="base.css"><style>
+.c { position: relative; width: 1600px; height: 900px; overflow: hidden; background: radial-gradient(ellipse 55% 70% at 50% 0%, #2e2409 0%, #0f0d08 55%, #070706 100%); text-align: center; }
+.dots { -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 45%, transparent 40%, #000 100%); }
+.rope { position: absolute; left: 0; right: 0; height: 12px; background: linear-gradient(rgba(246,241,232,.22),rgba(246,241,232,.22)) 0 0/100% 1px no-repeat, linear-gradient(rgba(255,197,49,.75),rgba(255,197,49,.75)) 0 5px/100% 2px no-repeat, linear-gradient(rgba(246,241,232,.22),rgba(246,241,232,.22)) 0 11px/100% 1px no-repeat; }
+.mark { position: absolute; left: 50%; top: 86px; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; font-family: Anton; font-size: 40px; letter-spacing: .03em; color: var(--ink); }
+.mark span { transform: skewX(-8deg); display: inline-block; }
+.mark svg { width: 56px; height: 56px; }
+.live { position: absolute; left: 50%; top: 190px; transform: translateX(-50%) rotate(-2deg); font-family: GeistMono; font-size: 22px; letter-spacing: .26em; color: #120e02; background: var(--bell); padding: 10px 22px; box-shadow: 5px 5px 0 #000; display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+.live i { width: 12px; height: 12px; border-radius: 50%; background: #120e02; }
+h1 { position: absolute; left: 0; right: 0; top: 262px; font-family: Anton; font-weight: 400; text-transform: uppercase; font-size: 166px; line-height: 1.02; transform: skewX(-8deg); color: var(--ink); text-shadow: 8px 8px 0 #000; }
+h1 .w { color: transparent; -webkit-text-stroke: 3px var(--ink); text-shadow: none; }
+h1 em { font-style: normal; color: var(--bell); -webkit-text-stroke: 0; text-shadow: 8px 8px 0 #000; }
+.sub { position: absolute; left: 0; right: 0; top: 625px; font-family: GeistMono; font-size: 24px; letter-spacing: .08em; color: rgba(246,241,232,.75); }
+.bar { position: absolute; left: 50%; bottom: 112px; transform: translateX(-50%); width: 760px; display: grid; grid-template-columns: 1fr 76px 1fr; gap: 18px; align-items: center; }
+.hp { height: 20px; transform: skewX(-24deg); border: 2px solid #000; box-shadow: 0 0 0 1px #34312a; position: relative; }
+.hp::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 16px, rgba(0,0,0,.45) 16px 18px); }
+.hp.g { background: linear-gradient(#ffd35c, #ffc531 55%, #b98a10); }
+.hp.w2 { background: linear-gradient(#fff, #efe9dc 55%, #bdb6a8); }
+.vs { width: 76px; height: 76px; border-radius: 50%; background: #000; border: 3px solid var(--bell); display: grid; place-items: center; font-family: Anton; font-size: 32px; color: var(--bell); transform: rotate(-8deg); box-shadow: 0 0 0 7px rgba(255,197,49,.12); }
+</style></head><body><div class="c grain">
+<div class="dots"></div>
+<div class="rope" style="top:30px"></div><div class="rope" style="bottom:30px"></div>
+<div class="mark"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#000"/><rect x=".75" y=".75" width="30.5" height="30.5" rx="8.25" fill="none" stroke="#ffc531" stroke-opacity=".5" stroke-width="1.5"/><path d="M18.5 4 9.5 18h6l-2.5 10 10-15h-6.2L18.5 4Z" fill="#ffc531" stroke="#000" stroke-width="1.4" stroke-linejoin="round"/></svg><span>THROWDOWN</span></div>
+<div class="live"><i></i>GOING LIVE TODAY · ROBINHOOD CHAIN</div>
+<h1>Today<br><span class="w">the bell <em>rings.</em></span></h1>
+<div class="sub">The first launchpad where projects can fight · <b style="color:var(--bell);font-family:Anton;font-weight:400;font-size:34px;letter-spacing:.04em">$THROW</b></div>
+<div class="bar"><div class="hp g"></div><div class="vs">VS</div><div class="hp w2"></div></div>
+</div></body></html>
